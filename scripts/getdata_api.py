@@ -46,7 +46,7 @@ class token:
             a = ['Rain']
             module_id = self.rain_token
         elif measure_type == 'wind':
-            a = ['WindStrength']
+            a = ['WindStrength', 'WindAngle', 'GustStrength']
             module_id = self.wind_token
         elif measure_type == 'pressure':
             a = ['Pressure']
