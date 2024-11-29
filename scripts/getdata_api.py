@@ -46,7 +46,7 @@ class token:
             a = ['Rain']
             module_id = self.rain_token
         elif measure_type == 'wind':
-            a = ['Wind']
+            a = ['WindStrength']
             module_id = self.wind_token
         elif measure_type == 'pressure':
             a = ['Pressure']
@@ -74,7 +74,8 @@ class token:
         self.get_mod_device()
         for measure_type in ['pressure', 'wind', 'rain', 'th']:
             self.get_historical_data(measure_type)
-            print(measure_type, self.data[measure_type])
+            if measure_type == 'wind':
+                print(measure_type, self.data[measure_type])
             
 
 # Convertir une date en timestamp UNIX
