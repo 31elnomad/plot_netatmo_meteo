@@ -62,7 +62,7 @@ class token:
             "optimize": "true",
             "real_time": "false",
         }
-        response = requests.get(API_URL, headers=headers, params=payload)
+        response = requests.get("https://api.netatmo.com/api/getmeasure", headers=headers, params=payload)
         if response.status_code == 200:
             self.data[measure_type] = response.json()
         else:
