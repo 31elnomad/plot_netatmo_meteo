@@ -29,14 +29,11 @@ class token:
         for station in data['body']['devices']:
             self.pres_token = station['_id']
             for module in station['modules']:
-                print(module)
                 if 'Temperature' in module['data_type']:
                     self.th_token = module['_id']
                 elif 'Rain' in module['data_type']:
                     self.rain_token = module['_id']
                 elif 'Wind' in module['data_type']:
-                    print(module['data_type'])
-                    quit()
                     self.wind_token = module['_id']
                 else:
                     raise Exception ("Le module {} n'a pas de id".format(module['data_type']))
