@@ -29,6 +29,8 @@ class token:
                 print(module)
                 if 'Temperature' in module['data_type']:
                     self.th_token = module['_id']
+                elif 'Rain' in module['data_type']:
+                    self.rain_token = module['_id']
                 else:
                     print(f"  Module ID: {module['_id']}")
                     quit()
