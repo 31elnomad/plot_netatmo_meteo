@@ -39,24 +39,20 @@ class token:
                     raise Exception ("Le module {} n'a pas de id".format(module['data_type']))
 
     def get_historical_data(self, measure_type):
-        if  measure_type == 'th':
-            a = ['Temperature', 'Humidity']
+        if  measure_type in ['Temperature', 'Humidity']:
             module_id = self.th_token
-        elif measure_type == 'rain':
-            a = ['Rain']
+        elif measure_type in  ['Rain']:
             module_id = self.rain_token
-        elif measure_type == 'wind':
-            a = ['WindStrength', 'WindAngle', 'GustStrength']
+        elif measure_type in ['WindStrength', 'WindAngle', 'GustStrength']:
             module_id = self.wind_token
-        elif measure_type == 'pressure':
-            a = ['Pressure']
+        elif measure_type in ['Pressure']:
             module_id = self.pres_token
         headers = {"Authorization": f"Bearer {self.access_token}"}
         payload = {
             "device_id": self.pres_token,
             "module_id": module_id,
             "scale": self.scale,
-            "type": a,
+            "type": [measure_type],
             "date_begin": int(self.start_ts),
             "date_end": int(self.end_ts),
             "optimize": "true",
@@ -72,10 +68,9 @@ class token:
     def getdata(self):
         self.data = {}
         self.get_mod_device()
-        for measure_type in ['pressure', 'wind', 'rain', 'th']:
+        for measure_type in ['Pressure', 'Temperature', 'Humidity', 'Rain', 'WindAngle', 'GustStrength', 'WindStrength']:
             self.get_historical_data(measure_type)
-            if measure_type == 'wind':
-                print(measure_type, self.data[measure_type])
+        print(self.data)
             
 
 # Convertir une date en timestamp UNIX
