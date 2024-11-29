@@ -15,8 +15,8 @@ class token:
                             int(config['global']['end'][6:8]),
                             0)
         # Convertir les dates en timestamps UNIX
-        self.start_ts = to_unix_timestamp(self.start.strftime("%Y-%m-%d"))
-        self.end_ts = to_unix_timestamp(self.end.strftime("%Y-%m-%d"))
+        self.start_ts = to_unix_timestamp(self.start.strftime("%Y%m%d"))
+        self.end_ts = to_unix_timestamp(self.end.strftime("%Y%m%d"))
         self.scale = config['global']['scale']
 
     def get_mod_device(self):
