@@ -42,10 +42,10 @@ class token:
                     raise Exception ("Le module {} n'a pas de id".format(module['data_type']))
 
     def get_historical_data(self, measure_type):
-        if  measure_type = 'th':
+        if  measure_type == 'th':
             a = ['Temperature', 'Humidity']
             module_id = self.th_token
-        elif measure_type = 'rain':
+        elif measure_type == 'rain':
             a = ['Rain']
             module_id = self.rain_token
         headers = {"Authorization": f"Bearer {self.token}"}
