@@ -25,8 +25,6 @@ class token:
         headers = {"Authorization": f"Bearer {self.access_token}"}
         response = requests.get(url, headers=headers)
         data = response.json()
-        print(data)
-        quit()
         # Afficher les device_id et module_id
         for station in data['body']['devices']:
             self.pres_token = station['_id']
