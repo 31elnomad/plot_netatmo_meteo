@@ -21,14 +21,13 @@ class token:
         headers = {"Authorization": f"Bearer {self.access_token}"}
         response = requests.get(url, headers=headers)
         data = response.json()
-        print(data)
-        quit()
         # Afficher les device_id et module_id
         for station in data['body']['devices']:
             print(f"Station ID: {station['_id']}")
             for module in station['modules']:
                 print(module)
                 print(f"  Module ID: {module['_id']}")
+                quit()
 
     def getdata(self):
         self.get_mod_device()
