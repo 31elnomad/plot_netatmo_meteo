@@ -1,10 +1,10 @@
 import argparse
-
-def main(arg):
-    print(f"Argument reçu : {arg}")
+import configparser
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-cfg", help="cfg", required=True)
     args = parser.parse_args()
-    main(args.cfg)
+    config = configparser.ConfigParser()
+    config.read(args.cfg)
+    print(config)
