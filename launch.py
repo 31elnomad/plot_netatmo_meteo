@@ -1,7 +1,7 @@
 import argparse
 import configparser
 import sys
-sys.path.append('script')
+sys.path.append('scripts')
 from getdata_api import token
 
 if __name__ == "__main__":
