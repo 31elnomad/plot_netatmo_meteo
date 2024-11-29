@@ -51,7 +51,7 @@ class token:
         elif measure_type == 'pressure':
             a = ['Pressure']
             module_id = self.pres_token
-        headers = {"Authorization": f"Bearer {self.token}"}
+        headers = {"Authorization": f"Bearer {self.access_token}"}
         payload = {
             "device_id": self.pres_token,
             "module_id": module_id,
