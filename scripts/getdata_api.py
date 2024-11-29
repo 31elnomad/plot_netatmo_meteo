@@ -24,10 +24,14 @@ class token:
         # Afficher les device_id et module_id
         for station in data['body']['devices']:
             print(f"Station ID: {station['_id']}")
+            self.pres_token = station['_id']
             for module in station['modules']:
                 print(module)
-                print(f"  Module ID: {module['_id']}")
-                quit()
+                if 'Temperature' in module['data_type']:
+                    self.th_token = module['_id']
+                else:
+                    print(f"  Module ID: {module['_id']}")
+                    quit()
 
     def getdata(self):
         self.get_mod_device()
