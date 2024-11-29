@@ -6,7 +6,6 @@ class token:
     def __init__(self, config):
         self.config = config
         self.access_token = config['data_access']['ACCESS_TOKEN']
-        self.api_url = config['data_access']['API_URL']
         self.start = datetime(int(config['global']['start'][:4]),
                               int(config['global']['start'][4:6]),
                               int(config['global']['start'][6:8]),
