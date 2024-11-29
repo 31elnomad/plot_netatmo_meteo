@@ -27,6 +27,7 @@ class token:
         for station in data['body']['devices']:
             print(f"Station ID: {station['_id']}")
             for module in station['modules']:
+                print(module)
                 print(f"  Module ID: {module['_id']}")
 
     def getdata(self):
