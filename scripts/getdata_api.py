@@ -67,3 +67,7 @@ class token:
 
     def getdata(self):
         self.get_mod_device()
+
+# Convertir une date en timestamp UNIX
+def to_unix_timestamp(date):
+    return int(time.mktime(datetime.strptime(date, "%Y%m%d").timetuple()))
