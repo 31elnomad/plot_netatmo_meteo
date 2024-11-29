@@ -1,5 +1,8 @@
 import argparse
 import configparser
+import sys
+sys.path.append('script')
+from getdata_api import token
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -7,4 +10,6 @@ if __name__ == "__main__":
     args = parser.parse_args()
     config = configparser.ConfigParser()
     config.read(args.cfg)
-    print(config)
+
+    data_obj = token(config)
+    data_obj.getdata()
