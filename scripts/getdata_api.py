@@ -53,6 +53,9 @@ class token:
         elif measure_type == 'wind':
             a = ['Wind']
             module_id = self.wind_token
+        elif measure_type == 'pressure':
+            a = ['Pressure']
+            module_id = self.pres_token
         headers = {"Authorization": f"Bearer {self.token}"}
         payload = {
             "device_id": self.pres_token,
@@ -66,13 +69,18 @@ class token:
         }
         response = requests.get(API_URL, headers=headers, params=payload)
         if response.status_code == 200:
-            return response.json()
+            self.data[measure_type] = response.json()
         else:
             print("Erreur :", response.json())
-            return None
+            self.data[measure_type] = None
 
     def getdata(self):
+        self.data = {}
         self.get_mod_device()
+        for measure_type in ['pressure', 'wind', 'rain', 'th']:
+            self.get_historical_data(measure_type)
+            print(measure_type, self.data[measure_type])
+            
 
 # Convertir une date en timestamp UNIX
 def to_unix_timestamp(date):
