@@ -25,6 +25,8 @@ class token:
         headers = {"Authorization": f"Bearer {self.access_token}"}
         response = requests.get(url, headers=headers)
         data = response.json()
+        print(data)
+        quit()
         # Afficher les device_id et module_id
         for station in data['body']['devices']:
             self.pres_token = station['_id']
@@ -48,6 +50,9 @@ class token:
         elif measure_type == 'rain':
             a = ['Rain']
             module_id = self.rain_token
+        elif measure_type == 'wind':
+            a = ['Wind']
+            module_id = self.wind_token
         headers = {"Authorization": f"Bearer {self.token}"}
         payload = {
             "device_id": self.pres_token,
