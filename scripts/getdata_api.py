@@ -20,9 +20,7 @@ class token:
 
     def get_mod_device(self):
         url = "https://api.netatmo.com/api/getstationsdata"
-        headers = {
-                  "Authorization": "Bearer {self.access_token}"
-        }
+        headers = {"Authorization": f"Bearer {self.access_token}"}
         response = requests.get(url, headers=headers)
         data = response.json()
         print(data)
