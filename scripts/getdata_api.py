@@ -17,8 +17,7 @@ class token:
                             int(config['global']['end'][6:8]),
                             0)
         # Convertir les dates en timestamps UNIX
-        self.start_ts = to_unix_timestamp(self.start.strftime("%Y%m%d"))
-        self.end_ts = to_unix_timestamp(self.end.strftime("%Y%m%d"))
+        
         self.scale = config['global']['scale']
 
     def get_mod_device(self):
@@ -40,10 +39,14 @@ class token:
                     raise Exception ("Le module {} n'a pas de id".format(module['data_type']))
 
     def get_historical_data(self, measure_type):
+        start_ts = to_unix_timestamp(self.start.strftime("%Y%m%d"))
+        end_ts = to_unix_timestamp(self.end.strftime("%Y%m%d"))
         if  measure_type in ['Temperature', 'Humidity']:
             module_id = self.th_token
         elif measure_type in  ['Rain']:
             module_id = self.rain_token
+            tmp = self.start - timedelta(days=1)
+            start_ts = to_unix_timestamp(tmp.strftime("%Y%m%d"))
         elif measure_type in ['WindStrength', 'WindAngle', 'GustStrength']:
             module_id = self.wind_token
         elif measure_type in ['Pressure']:
@@ -54,8 +57,8 @@ class token:
             "module_id": module_id,
             "scale": self.scale,
             "type": [measure_type],
-            "date_begin": int(self.start_ts),
-            "date_end": int(self.end_ts),
+            "date_begin": int(start_ts),
+            "date_end": int(end_ts),
             "optimize": "true",
             "real_time": "false",
         }
