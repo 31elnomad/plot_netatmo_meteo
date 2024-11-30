@@ -80,7 +80,7 @@ class token:
             begintime = int(tmp[i]['beg_time'])
             deltat = int(tmp[i]['step_time'])
             for j in range(len(tmp[i]['value'])):
-                print(tmp[i]['value'].flatten())
+                print(np.array(tmp[i]['value']).flatten())
         
         
             
