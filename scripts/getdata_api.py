@@ -73,7 +73,7 @@ class token:
             self.reformate_data(measure_type)
 
     def reformate_data(self, measure_type):
-        tmp = self.data[measure_type]
+        tmp = self.data[measure_type]['body']
         self.data[measure_type] = []
         self.data[measure_type+'_t'] = []
         print(tmp)
