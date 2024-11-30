@@ -82,7 +82,7 @@ class token:
             deltat = int(tmp[i]['step_time'])
             for j in range(len(tmp[i]['value'])):
                 self.data[measure_type].append(np.array(tmp[i]['value']).flatten()[j])
-                self.data[measure_type+'_t'].append(begintime + J * deltat) 
+                self.data[measure_type+'_t'].append(begintime + j * deltat) 
         
         
             
