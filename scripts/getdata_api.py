@@ -71,6 +71,20 @@ class token:
         for measure_type in ['Pressure', 'Temperature', 'Humidity', 'Rain', 'WindAngle', 'GustStrength', 'WindStrength']:
             self.get_historical_data(measure_type)
         print(self.data['Rain']['body'][0])
+
+    def reformate_data(self, measure_type):
+        tmp = self.data[measure_type]
+        self.data[measure_type] = []
+        self.data[measure_type+'_t'] = []
+        for i in range(len(tmp)):
+            begintime = int(tmp[i]['beg_time'])
+            deltat = int(tmp[i]['step_time'])
+            print(len(tmp[i]['value']))
+            quit()
+            for j in range(len(tmp[i]['value'])):
+                print('ok')
+        
+        
             
 
 # Convertir une date en timestamp UNIX
