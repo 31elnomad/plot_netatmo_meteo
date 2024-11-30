@@ -79,7 +79,7 @@ class token:
         for i in range(len(tmp)):
             begintime = int(tmp[i]['beg_time'])
             deltat = int(tmp[i]['step_time'])
-            print(len(tmp[i]['value']))
+            print(tmp[i]['value'])
             quit()
             for j in range(len(tmp[i]['value'])):
                 print('ok')
