@@ -1,6 +1,7 @@
 from datetime import datetime
 import time
 import requests
+import numpy as np
 
 class token:
 
