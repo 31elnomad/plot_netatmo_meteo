@@ -70,7 +70,7 @@ class token:
         self.get_mod_device()
         for measure_type in ['Pressure', 'Temperature', 'Humidity', 'Rain', 'WindAngle', 'GustStrength', 'WindStrength']:
             self.get_historical_data(measure_type)
-        print(len(self.data['Rain']['body']))
+        print(len(self.data['Rain']['body'][0]))
             
 
 # Convertir une date en timestamp UNIX
