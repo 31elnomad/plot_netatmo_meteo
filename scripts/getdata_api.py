@@ -70,7 +70,7 @@ class token:
         self.get_mod_device()
         for measure_type in ['Pressure', 'Temperature', 'Humidity', 'Rain', 'WindAngle', 'GustStrength', 'WindStrength']:
             self.get_historical_data(measure_type)
-        print(self.data['Rain']['body'][0])
+            self.reformate_data(measure_type)
 
     def reformate_data(self, measure_type):
         tmp = self.data[measure_type]
