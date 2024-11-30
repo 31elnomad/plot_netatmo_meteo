@@ -76,6 +76,8 @@ class token:
         tmp = self.data[measure_type]
         self.data[measure_type] = []
         self.data[measure_type+'_t'] = []
+        print(tmp)
+        quit()
         for i in range(len(tmp)):
             begintime = int(tmp[i]['beg_time'])
             deltat = int(tmp[i]['step_time'])
