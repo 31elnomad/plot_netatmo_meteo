@@ -91,8 +91,10 @@ class token:
     def cmpt_date(self):
         start_ts = to_unix_timestamp(self.start.strftime("%Y%m%d"))
         print(start_ts, self.data['Pressure_t'][0])
-        for measure_type in ['Pressure', 'Temperature', 'Humidity', 'Rain', 'WindAngle', 'GustStrength', 'WindStrength']:
+        
+        for measure_type in ['Pressure', 'Temperature', 'Rain', 'WindAngle']:
             name = measure_type + '_t'
+            print(len(self.data[name]))
         
         
             
