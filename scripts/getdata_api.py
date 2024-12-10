@@ -75,7 +75,7 @@ class token:
         for measure_type in ['Pressure', 'Temperature', 'Humidity', 'Rain', 'WindAngle', 'GustStrength', 'WindStrength']:
             self.get_historical_data(measure_type)
             self.reformate_data(measure_type)
-        print(self.data)
+        self.cmpt_date()
 
     def reformate_data(self, measure_type):
         tmp = self.data[measure_type]['body']
