@@ -94,7 +94,7 @@ class token:
         
         for measure_type in ['Pressure', 'Temperature', 'Rain', 'WindAngle']:
             name = measure_type + '_t'
-            print(len(self.data[name]))
+            print(len(self.data[measure_type]))
         
         
             
