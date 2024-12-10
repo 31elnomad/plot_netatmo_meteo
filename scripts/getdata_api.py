@@ -87,6 +87,12 @@ class token:
             for j in range(len(tmp[i]['value'])):
                 self.data[measure_type].append(np.array(tmp[i]['value']).flatten()[j])
                 self.data[measure_type+'_t'].append(begintime + j * deltat) 
+
+    def cmpt_date(self):
+        start_ts = to_unix_timestamp(self.start.strftime("%Y%m%d"))
+        print(start_ts, self.data['Pressure_t'][0])
+        for measure_type in ['Pressure', 'Temperature', 'Humidity', 'Rain', 'WindAngle', 'GustStrength', 'WindStrength']:
+            name = measure_type + '_t'
         
         
             
