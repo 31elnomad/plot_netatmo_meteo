@@ -18,7 +18,8 @@ def cmp_cumul_rain(duration, time, data):
         tmp = np.array(time[:i+1])
         mask = tmp > time[i] - deltat
         data_tmp = np.array(data[:i+1])[mask]
-        print(data_tmp)
+        cumul[i] = np.sum(np.round(data_tmp,1))
+    print(cumul, np.max(cumul))
         
 
         
