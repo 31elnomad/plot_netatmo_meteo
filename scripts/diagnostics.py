@@ -13,7 +13,7 @@ def cmp_cumul_rain(duration, time, data):
     else:
         raise Exception ("La durée pour calculer le cumul de pluie n'est pas connue") 
     for i in range(len(data)):
-        tmp = time[:i]
+        tmp = np.array(time[:i])
         mask = tmp > time[i] - deltat
         
         print(mask)
