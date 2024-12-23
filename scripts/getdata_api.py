@@ -2,6 +2,7 @@ from datetime import datetime, timedelta
 import time
 import requests
 import numpy as np
+from diagnostics import cmp_cumul_rain
 
 class token:
 
@@ -75,6 +76,11 @@ class token:
         for measure_type in ['Pressure', 'Temperature', 'Humidity', 'Rain', 'WindAngle', 'GustStrength', 'WindStrength']:
             self.get_historical_data(measure_type)
             self.reformate_data(measure_type)
+            if measure_type in ['Rain']:
+                cmp_cumul_rain(duration = '1h',
+                               time = self.data['Rain_t'],
+                               data = self.data['Rain'])
+                quit()
         self.cmpt_date()
 
     def reformate_data(self, measure_type):
