@@ -77,9 +77,12 @@ class token:
             self.get_historical_data(measure_type)
             self.reformate_data(measure_type)
             if measure_type in ['Rain']:
-                cmp_cumul_rain(duration = '1h',
-                               time = self.data['Rain_t'],
-                               data = self.data['Rain'])
+                for duration in ['1h', '3h', '6h', '12h', '1d']:
+                    name = measure_type + '_' + duration
+                    self.data[name] = cmp_cumul_rain(duration = duration,
+                                                     time = self.data['Rain_t'],
+                                                     data = self.data['Rain'])
+                    print(self.data[name])
                 quit()
         self.cmpt_date()
 
