@@ -80,13 +80,13 @@ class token:
             if measure_type in ['Rain']:
                 # on supprime les données de la veille pour la pluie qui ont servi à calculer le cumul de pluie
                 mask_t = np.array(self.data['Rain_t']) >= int(start_ts)
-                self.data['Rain_t'] = np.array(self.data['Rain_t'])[mask_t]
                 for duration in ['1h', '3h', '6h', '12h', '1d']:
                     name = measure_type + '_' + duration
                     self.data[name] = cmp_cumul_rain(duration = duration,
                                                      time = self.data['Rain_t'],
                                                      data = self.data['Rain'])
                     self.data[name] = self.data[name][mask_t]
+                self.data['Rain_t'] = np.array(self.data['Rain_t'])[mask_t]
         self.cmpt_date()
 
     def reformate_data(self, measure_type):
