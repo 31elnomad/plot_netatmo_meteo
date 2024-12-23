@@ -71,17 +71,22 @@ class token:
             self.data[measure_type] = None
 
     def getdata(self):
+        start_ts = to_unix_timestamp(self.start.strftime("%Y%m%d"))
         self.data = {}
         self.get_mod_device()
         for measure_type in ['Pressure', 'Temperature', 'Humidity', 'Rain', 'WindAngle', 'GustStrength', 'WindStrength']:
             self.get_historical_data(measure_type)
             self.reformate_data(measure_type)
             if measure_type in ['Rain']:
+                # on supprime les données de la veille pour la pluie qui ont servi à calculer le cumul de pluie
+                mask_t = np.array(self.data['Rain_t']) >= int(start_ts)
+                self.data['Rain_t'] = np.array(self.data['Rain_t'])[mask]
                 for duration in ['1h', '3h', '6h', '12h', '1d']:
                     name = measure_type + '_' + duration
                     self.data[name] = cmp_cumul_rain(duration = duration,
                                                      time = self.data['Rain_t'],
                                                      data = self.data['Rain'])
+                    self.data[name] = self.data[name][mask_t]
         self.cmpt_date()
 
     def reformate_data(self, measure_type):
@@ -98,11 +103,6 @@ class token:
     def cmpt_date(self):
         start_ts = to_unix_timestamp(self.start.strftime("%Y%m%d"))
         print(start_ts, self.data['Pressure_t'][0])
-        # on supprime les données de la veille pour la pluie qui ont servi à calculer le cumul de pluie
-        mask = np.array(self.data['Rain_t']) >= int(start_ts)
-        print(mask)
-        quit()
-        
         for measure_type in ['Pressure', 'Temperature', 'Rain', 'WindAngle']:
             name = measure_type + '_t'
             print(len(self.data[measure_type]), measure_type)
