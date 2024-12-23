@@ -10,7 +10,7 @@ def cmp_cumul_rain(duration, time, data):
     elif duration in ['12h']:
         deltat = 12 * 3600
     elif duration in ['1d', '1j', '24h']:
-        delta = 24 * 3600
+        deltat = 24 * 3600
     else:
         raise Exception ("La durée pour calculer le cumul de pluie n'est pas connue") 
     cumul = np.empty(len(data))
