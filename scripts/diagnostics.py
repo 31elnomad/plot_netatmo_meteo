@@ -13,10 +13,14 @@ def cmp_cumul_rain(duration, time, data):
         delta = 24 * 3600
     else:
         raise Exception ("La durée pour calculer le cumul de pluie n'est pas connue") 
+    cumul = np.empty(len(data))
     for i in range(len(data)):
-        tmp = np.array(time[:i])
-        mask = tmp > time[i] - deltat
+        if i == 0:
+            cumul[i] = np.round(data[i],1)
+        else:
+            tmp = np.array(time[:i])
+            mask = tmp > time[i] - deltat
         
-        print(tmp)
+        print(cumul[0])
         quit()
         
