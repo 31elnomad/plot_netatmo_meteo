@@ -7,8 +7,14 @@ from diagnostics import cmp_cumul_rain
 class token:
 
     def __init__(self, config):
+        """
+        Initialize the token object with the given configuration.
+        / Initialise l'objet token avec la configuration donnée.
+        """
         self.config = config
         self.access_token = config['data_access']['ACCESS_TOKEN']
+        # Parse start and end dates from the configuration.
+        # / Analyse les dates de début et de fin depuis la configuration.
         self.start = datetime(int(config['global']['start'][:4]),
                               int(config['global']['start'][4:6]),
                               int(config['global']['start'][6:8]),
@@ -17,16 +23,19 @@ class token:
                             int(config['global']['end'][4:6]),
                             int(config['global']['end'][6:8]),
                             0)
-        # Convertir les dates en timestamps UNIX
-        
         self.scale = config['global']['scale']
 
     def get_mod_device(self):
+        """
+        Retrieve module and device IDs from the Netatmo API.
+        / Récupère les IDs des modules et des appareils depuis l'API Netatmo.
+        """
         url = "https://api.netatmo.com/api/getstationsdata"
         headers = {"Authorization": f"Bearer {self.access_token}"}
         response = requests.get(url, headers=headers)
         data = response.json()
-        # Afficher les device_id et module_id
+        # Display and store device/module IDs.
+        # / Affiche et stocke les IDs des appareils/modules.
         for station in data['body']['devices']:
             self.pres_token = station['_id']
             for module in station['modules']:
@@ -37,20 +46,26 @@ class token:
                 elif 'Wind' in module['data_type']:
                     self.wind_token = module['_id']
                 else:
-                    raise Exception ("Le module {} n'a pas de id".format(module['data_type']))
+                    raise Exception(f"Le module {module['data_type']} n'a pas d'ID / Module {module['data_type']} has no ID.")
 
     def get_historical_data(self, measure_type):
+        """
+        Fetch historical data for a specific measure type.
+        / Récupère les données historiques pour un type de mesure spécifique.
+        """
         start_ts = to_unix_timestamp(self.start.strftime("%Y%m%d"))
         end_ts = to_unix_timestamp(self.end.strftime("%Y%m%d"))
-        if  measure_type in ['Temperature', 'Humidity']:
+        # Determine the appropriate module ID based on measure type.
+        # / Détermine l'ID de module approprié en fonction du type de mesure.
+        if measure_type in ['Temperature', 'Humidity']:
             module_id = self.th_token
-        elif measure_type in  ['Rain']:
+        elif measure_type == 'Rain':
             module_id = self.rain_token
             tmp = self.start - timedelta(days=1)
             start_ts = to_unix_timestamp(tmp.strftime("%Y%m%d"))
         elif measure_type in ['WindStrength', 'WindAngle', 'GustStrength']:
             module_id = self.wind_token
-        elif measure_type in ['Pressure']:
+        elif measure_type == 'Pressure':
             module_id = self.pres_token
         headers = {"Authorization": f"Bearer {self.access_token}"}
         payload = {
@@ -67,49 +82,64 @@ class token:
         if response.status_code == 200:
             self.data[measure_type] = response.json()
         else:
-            print("Erreur :", response.json())
+            print(f"Erreur : {response.json()} / Error: {response.json()}")
             self.data[measure_type] = None
 
     def getdata(self):
+        """
+        Retrieve and process data for all relevant measure types.
+        / Récupère et traite les données pour tous les types de mesures pertinents.
+        """
         start_ts = to_unix_timestamp(self.start.strftime("%Y%m%d"))
         self.data = {}
         self.get_mod_device()
         for measure_type in ['Pressure', 'Temperature', 'Humidity', 'Rain', 'WindAngle', 'GustStrength', 'WindStrength']:
             self.get_historical_data(measure_type)
             self.reformate_data(measure_type)
-            if measure_type in ['Rain']:
-                # on supprime les données de la veille pour la pluie qui ont servi à calculer le cumul de pluie
+            if measure_type == 'Rain':
+                # Exclude previous day's rain data used for cumulative calculation.
+                # / Supprime les données de pluie de la veille utilisées pour le calcul du cumul.
                 mask_t = np.array(self.data['Rain_t']) >= int(start_ts)
                 for duration in ['1h', '3h', '6h', '12h', '1d']:
                     name = measure_type + '_' + duration
-                    self.data[name] = cmp_cumul_rain(duration = duration,
-                                                     time = self.data['Rain_t'],
-                                                     data = self.data['Rain'])
+                    self.data[name] = cmp_cumul_rain(
+                        duration=duration,
+                        time=self.data['Rain_t'],
+                        data=self.data['Rain']
+                    )
                     self.data[name] = self.data[name][mask_t]
                 self.data['Rain_t'] = np.array(self.data['Rain_t'])[mask_t]
         self.cmpt_date()
 
     def reformate_data(self, measure_type):
+        """
+        Reformat the raw data into a structured format.
+        / Reformate les données brutes dans un format structuré.
+        """
         tmp = self.data[measure_type]['body']
         self.data[measure_type] = []
-        self.data[measure_type+'_t'] = []
-        for i in range(len(tmp)):
-            begintime = int(tmp[i]['beg_time'])
-            deltat = int(tmp[i]['step_time'])
-            for j in range(len(tmp[i]['value'])):
-                self.data[measure_type].append(np.array(tmp[i]['value']).flatten()[j])
-                self.data[measure_type+'_t'].append(begintime + j * deltat) 
+        self.data[measure_type + '_t'] = []
+        for entry in tmp:
+            begintime = int(entry['beg_time'])
+            deltat = int(entry['step_time'])
+            for j, value in enumerate(entry['value']):
+                self.data[measure_type].append(np.array(value).flatten()[j])
+                self.data[measure_type + '_t'].append(begintime + j * deltat)
 
     def cmpt_date(self):
+        """
+        Validate and print the date range of the data.
+        / Valide et affiche la plage de dates des données.
+        """
         start_ts = to_unix_timestamp(self.start.strftime("%Y%m%d"))
         print(start_ts, self.data['Pressure_t'][0])
         for measure_type in ['Pressure', 'Temperature', 'Rain', 'WindAngle']:
             name = measure_type + '_t'
             print(len(self.data[name]), measure_type)
-        
-        
-            
 
-# Convertir une date en timestamp UNIX
 def to_unix_timestamp(date):
+    """
+    Convert a date to a UNIX timestamp.
+    / Convertit une date en timestamp UNIX.
+    """
     return int(time.mktime(datetime.strptime(date, "%Y%m%d").timetuple()))
