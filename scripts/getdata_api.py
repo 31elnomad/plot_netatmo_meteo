@@ -118,6 +118,7 @@ class token:
         """
         tmp = self.data[measure_type]['body']
         print(tmp)
+        quit()
         self.data[measure_type] = []
         self.data[measure_type + '_t'] = []
         for entry in tmp:
