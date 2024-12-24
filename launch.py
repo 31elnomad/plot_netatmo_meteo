@@ -32,6 +32,9 @@ def main():
         sys.exit(1)
 
     # Create and use the `token` object to fetch data. / Créer et utiliser l'objet `token` pour récupérer des données.
+    data_obj = token(config)
+    data_obj.getdata()
+    quit()
     try:
         data_obj = token(config)
         data_obj.getdata()
