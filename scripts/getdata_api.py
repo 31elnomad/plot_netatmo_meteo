@@ -122,7 +122,8 @@ class token:
         for entry in tmp:
             begintime = int(entry['beg_time'])
             deltat = int(entry['step_time'])
-            print(entry['value'], len(entry['value'])
+            print(entry['value'], len(entry['value']))
+            quit()
             for j, value in enumerate(entry['value']):
                 print(j, value)
                 
