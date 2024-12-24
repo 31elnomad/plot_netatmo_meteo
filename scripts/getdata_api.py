@@ -125,7 +125,7 @@ class token:
             for j, value in enumerate(entry['value']):
                 print(j, value)
                 
-                self.data[measure_type].append(np.array(value).flatten())
+                self.data[measure_type].append(np.array(value).flatten()[0])
                 self.data[measure_type + '_t'].append(begintime + j * deltat)
             print(self.data[measure_type])
             quit()
