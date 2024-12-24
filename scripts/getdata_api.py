@@ -120,14 +120,14 @@ class token:
         self.data[measure_type] = []
         self.data[measure_type + '_t'] = []
         for entry in tmp:
-            print(entry)
-            quit()
             begintime = int(entry['beg_time'])
             deltat = int(entry['step_time'])
             for j, value in enumerate(entry['value']):
+                print(j, value)
+                
                 self.data[measure_type].append(np.array(value).flatten()[j])
                 self.data[measure_type + '_t'].append(begintime + j * deltat)
-
+            quit()
     def cmpt_date(self):
         """
         Validate and print the date range of the data.
