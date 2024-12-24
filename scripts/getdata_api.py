@@ -117,6 +117,7 @@ class token:
         / Reformate les données brutes dans un format structuré.
         """
         tmp = self.data[measure_type]['body']
+        print(tmp)
         self.data[measure_type] = []
         self.data[measure_type + '_t'] = []
         for entry in tmp:
