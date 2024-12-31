@@ -24,6 +24,19 @@ class token:
                             int(config['global']['end'][6:8]),
                             0)
         self.scale = config['global']['scale']
+        if self.scale not in ['max', '5min', '30min', '1hour', '1day', '1week']:
+            raise Exception ("scale must be in 'max', '5min', '30min', '1hour', '1day', '1week'.")
+        else:
+            if self.scale in ['5min', 'max']:
+                self.scale_sec = 300
+            elif self.scale in ['30min']:
+                self.scale_sec = 1800
+            elif self.scale in ['1hour']:
+                self.scale_sec = 3600
+            elif self.scale in ['1day']:
+                self.scale_sec = 3600 * 24
+            elif self.scale in ['1week']:
+                self.scale_sec = 3600 * 24 * 7
 
     def get_mod_device(self):
         """
@@ -133,9 +146,15 @@ class token:
         """
         start_ts = to_unix_timestamp(self.start.strftime("%Y%m%d"))
         print(start_ts, self.data['Pressure_t'][0])
+        max_dim = 0
         for measure_type in ['Pressure', 'Temperature', 'Rain', 'WindAngle']:
-            name = measure_type + '_t'
-            print(len(self.data[name]), measure_type)
+            if len(self.data[measure_type]) > max_dim:
+                max_dim = len(self.data[measure_type])
+        for i in range(max_dim):
+            for measure_type in ['Pressure', 'Temperature', 'Rain', 'WindAngle']:
+                name = measure_type + '_t'
+                if self.data[name] - start_ts < self.scale_sec:
+                    print('ok')
 
 def to_unix_timestamp(date):
     """
