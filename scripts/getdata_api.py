@@ -150,10 +150,11 @@ class token:
         for measure_type in ['Pressure', 'Temperature', 'Rain', 'WindAngle']:
             if len(self.data[measure_type]) > max_dim:
                 max_dim = len(self.data[measure_type])
+        
         for i in range(max_dim):
             for measure_type in ['Pressure', 'Temperature', 'Rain', 'WindAngle']:
                 name = measure_type + '_t'
-                if self.data[name] - start_ts < self.scale_sec:
+                if self.data[name][i] - start_ts < self.scale_sec:
                     print('ok')
 
 def to_unix_timestamp(date):
