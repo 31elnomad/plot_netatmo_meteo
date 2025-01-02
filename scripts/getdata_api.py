@@ -147,7 +147,7 @@ class token:
         start_ts = to_unix_timestamp(self.start.strftime("%Y%m%d"))
         print(start_ts, self.data['Pressure_t'][0])
         max_dim = 0
-        for measure_type in ['Pressure', 'Temperature', 'Rain', 'WindAngle']:
+        for measure_type in ['Pressure_t', 'Temperature_t', 'Rain_t', 'WindAngle_t']:
             if len(self.data[measure_type]) > max_dim:
                 max_dim = len(self.data[measure_type])
         
