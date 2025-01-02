@@ -150,13 +150,23 @@ class token:
         for measure_type in ['Pressure_t', 'Temperature_t', 'Rain_t', 'WindAngle_t']:
             if len(self.data[measure_type]) > max_dim:
                 max_dim = len(self.data[measure_type])
-        
+        n = np.zeros(4)
         for i in range(max_dim):
+            time_tmp = []
             for measure_type in ['Pressure', 'Temperature', 'Rain', 'WindAngle']:
                 name = measure_type + '_t'
-                print(self.data[name][i] - start_ts, self.scale_sec)
-                if self.data[name][i] - start_ts < self.scale_sec:
-                    print('ok', max_dim)
+                if measure_type in ['Pressure']:
+                    j = 0
+                elif measure_type in  ['Temperature']:
+                    j = 1
+                elif measure_type in ['Rain']:
+                    j = 2
+                elif measure_type in ['WindAngle']:
+                    j = 3
+                if self.data[name][n[j]] - start_ts < self.scale_sec:
+                    time_tmp.append(self.data[name][n[j]])
+                    n[j] += 1
+                    print(time_tmp)
                     quit()
 
 def to_unix_timestamp(date):
