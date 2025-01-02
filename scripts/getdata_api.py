@@ -155,9 +155,9 @@ class token:
             for measure_type in ['Pressure', 'Temperature', 'Rain', 'WindAngle']:
                 name = measure_type + '_t'
                 print(self.data[name][i] - start_ts, self.scale_sec)
-                quit()
                 if self.data[name][i] - start_ts < self.scale_sec:
                     print('ok')
+                    quit()
 
 def to_unix_timestamp(date):
     """
