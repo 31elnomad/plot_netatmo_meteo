@@ -150,7 +150,7 @@ class token:
         for measure_type in ['Pressure_t', 'Temperature_t', 'Rain_t', 'WindAngle_t']:
             if len(self.data[measure_type]) > max_dim:
                 max_dim = len(self.data[measure_type])
-        n = np.zeros(4)
+        n = [0, 0, 0, 0]
         for i in range(max_dim):
             time_tmp = []
             for measure_type in ['Pressure', 'Temperature', 'Rain', 'WindAngle']:
