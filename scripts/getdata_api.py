@@ -156,7 +156,7 @@ class token:
                 name = measure_type + '_t'
                 print(self.data[name][i] - start_ts, self.scale_sec)
                 if self.data[name][i] - start_ts < self.scale_sec:
-                    print('ok')
+                    print('ok', max_dim)
                     quit()
 
 def to_unix_timestamp(date):
