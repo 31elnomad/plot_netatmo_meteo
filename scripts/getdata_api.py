@@ -179,7 +179,7 @@ class token:
                         tmp['Température'] = np.nan
                 elif measure_type in ['Humidity']:
                     if len(data) > 0:
-                        tmp['Humidité'] = np.mean(data)
+                        tmp['Humidité'] = int(np.mean(data))
                     else:
                         tmp['Humidité'] = np.nan
                 elif measure_type in ['Rain']:
