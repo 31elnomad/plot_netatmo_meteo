@@ -209,7 +209,7 @@ class token:
                         tmp['Rafales'] : np.nan
                 elif measure_type in ['WindStrength']:
                     if len(data) > 0:
-                        tmp['Vent'] - np.mean(data)
+                        tmp['Vent'] = np.mean(data)
                     else:
                         tmp['Vent'] = np.nan
                         
