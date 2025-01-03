@@ -1,4 +1,5 @@
 import numpy as np
+import math
 
 def cmp_cumul_rain(duration, time, data):
     """
@@ -46,5 +47,33 @@ def cmp_cumul_rain(duration, time, data):
         # Compute the cumulative sum of rainfall, rounded to 1 decimal.
         # / Calculer la somme cumulée des pluies, arrondie à 1 décimale.
         cumul[i] = np.sum(np.round(data_tmp, 1))
-
     return cumul
+
+
+
+def calculer_point_de_rosee(temperature, humidite_relative):
+    """
+    Calcule le point de rosée à partir de la température et de l'humidité relative.
+
+    Arguments :
+    - temperature : Température de l'air en °C
+    - humidite_relative : Humidité relative en pourcentage (ex. 50 pour 50%)
+
+    Retourne :
+    - Point de rosée en °C
+    """
+    # Constantes pour la formule de Magnus-Tetens
+    a = 17.27
+    b = 237.7
+
+    # Convertir l'humidité relative en fraction
+    RH = humidite_relative / 100.0
+
+    # Calculer alpha
+    alpha = (a * temperature) / (b + temperature) + math.log(RH)
+
+    # Calculer le point de rosée
+    Td = (b * alpha) / (a - alpha)
+
+    return Td
+
