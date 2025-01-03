@@ -2,6 +2,7 @@ from datetime import datetime, timedelta
 import time
 import requests
 import numpy as np
+import pandas as pd
 from diagnostics import cmp_cumul_rain
 
 class token:
@@ -24,8 +25,8 @@ class token:
                             int(config['global']['end'][6:8]),
                             0)
         self.scale = config['global']['scale']
-        if self.scale not in ['max', '5min', '30min', '1hour', '1day', '1week']:
-            raise Exception ("scale must be in 'max', '5min', '30min', '1hour', '1day', '1week'.")
+        if self.scale not in ['max', '5min', '30min', '1hour', '1day']:
+            raise Exception ("scale must be in 'max', '5min', '30min', '1hour', '1day'.")
         else:
             if self.scale in ['5min', 'max']:
                 self.scale_sec = 300
@@ -140,39 +141,27 @@ class token:
                 self.data[measure_type + '_t'].append(begintime + j * deltat)
 
     def cmpt_date(self):
-        """
-        Validate and print the date range of the data.
-        / Valide et affiche la plage de dates des données.
-        """
-        start_ts = to_unix_timestamp(self.start.strftime("%Y%m%d"))
-        print(start_ts, self.data['Pressure_t'][0])
-        max_dim = 0
-        for measure_type in ['Pressure_t', 'Temperature_t', 'Rain_t', 'WindAngle_t']:
-            if len(self.data[measure_type]) > max_dim:
-                max_dim = len(self.data[measure_type])
-        n = [0, 0, 0, 0]
-        self.data['Time'] = np.empty(max_dim).astype(str)
-        for i in range(max_dim):
-            time_tmp = []
-            for measure_type in ['Pressure', 'Temperature', 'Rain', 'WindAngle']:
-                name = measure_type + '_t'
-                if measure_type in ['Pressure']:
-                    j = 0
-                elif measure_type in  ['Temperature']:
-                    j = 1
-                elif measure_type in ['Rain']:
-                    j = 2
-                elif measure_type in ['WindAngle']:
-                    j = 3
-                if self.data[name][n[j]] - start_ts <= self.scale_sec:
-                    time_tmp.append(self.data[name][n[j]])
-                    n[j] += 1
-            epoch_timestamp = int(np.mean(np.array(time_tmp)))
-            dt_object = datetime.fromtimestamp(epoch_timestamp)  
-            formatted_time = dt_object.strftime("%Y-%m-%d %H:%M:%S")
-            self.data['Time'][i] = formatted_time
-            print(self.data['Time'][i], i)
-            start_ts = epoch_timestamp
+        if self.scale in ['max', '5min']:
+            dim = 24 * 12
+        elif self.scale in ['30min']:
+            dim = 48
+        elif self.scale in ['1hour']:
+            dim = 24
+        elif self.scale in ['1day']:
+            dim = 1
+        start_ts = to_unix_timestamp(self.start.strftime("%Y%m%d")) + self.scale_sec/2
+        columns=['Date', 'Temperature', 'Humidité', 'Point de rosé', 'Humidex', 'Windchill',
+                 'Direction', 'Vent', 'Rafales', 'Pression', 'Pluie 5min', 'Pluie 1h',
+                 'Pluie 3h', 'Pluie 6h', 'Pluie 12h', 'Pluie 24h']
+        df = pd.DataFrame(columns=columns)
+        for i in range(dim):
+            formatted_time = start_ts.strftime("%Y-%m-%d %H:%M:%S")
+            print(formatted_time)
+            quit()
+            #ligne = pd.DataFrame([{'Date'
+        
+        
+        
 
 def to_unix_timestamp(date):
     """
