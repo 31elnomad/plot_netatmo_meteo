@@ -123,6 +123,7 @@ class token:
                     )
                     self.data[name] = self.data[name][mask_t]
                 self.data['Rain_t'] = np.array(self.data['Rain_t'])[mask_t]
+                self.data['Rain'] = np.array(self.data['Rain'])[mask_t]
         self.cmpt_date()
 
     def reformate_data(self, measure_type):
