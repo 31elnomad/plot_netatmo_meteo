@@ -164,7 +164,7 @@ class token:
                     j = 2
                 elif measure_type in ['WindAngle']:
                     j = 3
-                if self.data[name][n[j]] - start_ts < self.scale_sec:
+                if self.data[name][n[j]] - start_ts <= self.scale_sec:
                     time_tmp.append(self.data[name][n[j]])
                     n[j] += 1
                 print('time_tmp', self.data[name][n[j]], start_ts)
