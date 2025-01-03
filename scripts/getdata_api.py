@@ -167,6 +167,7 @@ class token:
                 mask = mask1 * mask2
                 if measure_type in ['Pressure']:
                     tmp['Pression'] = np.mean(np.array(self.data[measure_type])[mask])
+                start_ts += self.scale_sec
             new_ligne = pd.DataFrame([tmp])
             df = pd.concat([df, new_ligne], ignore_index=True)
         print(df)
