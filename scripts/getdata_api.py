@@ -150,7 +150,7 @@ class token:
         elif self.scale in ['1day']:
             dim = 1
         start_ts = to_unix_timestamp(self.start.strftime("%Y%m%d")) + self.scale_sec/2
-        columns=['Date', 'Temperature', 'Humidité', 'Point de rosé', 'Humidex', 'Windchill',
+        columns=['Date', 'Température', 'Humidité', 'Point de rosé', 'Humidex', 'Windchill',
                  'Direction', 'Vent', 'Rafales', 'Pression', 'Pluie 5min', 'Pluie 1h',
                  'Pluie 3h', 'Pluie 6h', 'Pluie 12h', 'Pluie 24h']
         df = pd.DataFrame(columns=columns)
