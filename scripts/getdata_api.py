@@ -3,7 +3,7 @@ import time
 import requests
 import numpy as np
 import pandas as pd
-from diagnostics import cmp_cumul_rain
+from diagnostics import cmp_cumul_rain, calculer_point_de_rosee
 
 class token:
 
