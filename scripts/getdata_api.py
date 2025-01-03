@@ -185,11 +185,11 @@ class token:
                 elif measure_type in ['Rain']:
                     if len(data) > 0:
                         tmp['Pluie 5min'] = np.mean(data)
-                        tmp['Pluie 1h'] = np.array(self.data[measure_type+'_1h'])[mask]
-                        tmp['Pluie 3h'] = np.array(self.data[measure_type+'_3h'])[mask]
-                        tmp['Pluie 6h'] = np.array(self.data[measure_type+'_6h'])[mask]
-                        tmp['Pluie 12h'] = np.array(self.data[measure_type+'_12h'])[mask]
-                        tmp['Pluie 24h'] = np.array(self.data[measure_type+'_1d'])[mask]
+                        tmp['Pluie 1h'] = np.round(np.mean(np.array(self.data[measure_type+'_1h'])[mask]), 1)
+                        tmp['Pluie 3h'] = np.round(np.mean(np.array(self.data[measure_type+'_3h'])[mask]), 1)
+                        tmp['Pluie 6h'] = np.round(np.mean(np.array(self.data[measure_type+'_6h'])[mask]), 1)
+                        tmp['Pluie 12h'] = np.round(np.mean(np.array(self.data[measure_type+'_12h'])[mask]), 1)
+                        tmp['Pluie 24h'] = np.round(np.mean(np.array(self.data[measure_type+'_1d'])[mask]), 1)
                         
                         
             start_ts += self.scale_sec
