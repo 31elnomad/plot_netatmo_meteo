@@ -167,7 +167,13 @@ class token:
                 if self.data[name][n[j]] - start_ts < self.scale_sec:
                     time_tmp.append(self.data[name][n[j]])
                     n[j] += 1
-            self.data['Time'][i] = np.mean(np.array(time_tmp))/60
+            epoch_timestamp = np.mean(np.array(time_tmp)) // 60
+            if np.mean(np.array(time_tmp))%60 >= 30:
+                epoch_timestamp = epoch_timestamp + 1
+            epoch_timestamp = epoch_timestamp * 60
+            dt_object = datetime.fromtimestamp(epoch_timestamp)  
+            formatted_time = dt_object.strftime("%Y-%m-%d %H:%M:%S")
+            self.data['Time'][i] = formatted_time
             print(self.data['Time'][i])
             quit()
             start_ts = np.mean(np.array(time_tmp))
