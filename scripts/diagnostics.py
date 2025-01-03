@@ -88,10 +88,13 @@ def calculer_humidex(temperature, point_de_rosee):
     Retourne :
     - Humidex
     """
-    # Calcul de la tension de vapeur
-    e = 6.112 * math.exp((17.27 * point_de_rosee) / (237.7 + point_de_rosee))
-
-    # Calcul de l'humidex
-    humidex = temperature + 0.5555 * (e - 10)
+    if temperature >= 20:
+        # Calcul de la tension de vapeur
+        e = 6.112 * math.exp((17.27 * point_de_rosee) / (237.7 + point_de_rosee))
+    
+        # Calcul de l'humidex
+        humidex = temperature + 0.5555 * (e - 10)
+    else:
+        humidex = temperature
     return humidex
 
