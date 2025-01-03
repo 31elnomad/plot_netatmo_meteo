@@ -190,7 +190,28 @@ class token:
                         tmp['Pluie 6h'] = np.round(np.mean(np.array(self.data[measure_type+'_6h'])[mask]), 1)
                         tmp['Pluie 12h'] = np.round(np.mean(np.array(self.data[measure_type+'_12h'])[mask]), 1)
                         tmp['Pluie 24h'] = np.round(np.mean(np.array(self.data[measure_type+'_1d'])[mask]), 1)
-                        
+                    else:
+                        tmp['Pluie 5min'] = np.nan
+                        tmp['Pluie 1h'] = np.nan
+                        tmp['Pluie 3h'] = np.nan
+                        tmp['Pluie 6h'] = np.nan
+                        tmp['Pluie 12h'] = np.nan
+                        tmp['Pluie 24h'] = np.nan
+                elif measure_type['WindAngle']:
+                    if len(data) > 0:
+                        tmp['Direction'] = np.mean(data)
+                    else:
+                        tmp['Direction'] = np.nan
+                elif measure_type in ['GustStrength']:
+                    if len(data) > 0:
+                        tmp['Rafales'] = np.mean(data)
+                    else:
+                        tmp['Rafales'] : np.nan
+                elif measure_type in ['WindStrength']:
+                    if len(data) > 0:
+                        tmp['Vent'] - np.mean(data)
+                    else:
+                        tmp['Vent'] = np.nan
                         
             start_ts += self.scale_sec
             new_ligne = pd.DataFrame([tmp])
