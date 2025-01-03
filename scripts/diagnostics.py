@@ -77,3 +77,21 @@ def calculer_point_de_rosee(temperature, humidite_relative):
 
     return Td
 
+def calculer_humidex(temperature, point_de_rosee):
+    """
+    Calcule l'indice humidex à partir de la température et de l'humidité relative.
+
+    Arguments :
+    - temperature : Température de l'air en °C
+    - humidite_relative : Humidité relative en pourcentage (ex. 50 pour 50%)
+
+    Retourne :
+    - Humidex
+    """
+    # Calcul de la tension de vapeur
+    e = 6.112 * math.exp((17.27 * point_de_rosee) / (237.7 + point_de_rosee))
+
+    # Calcul de l'humidex
+    humidex = temperature + 0.5555 * (e - 10)
+    return humidex
+
