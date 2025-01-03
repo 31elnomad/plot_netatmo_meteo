@@ -165,8 +165,32 @@ class token:
                 mask1 = np.array(self.data[time_measure]) < start_ts + self.scale_sec/2 
                 mask2 = np.array(self.data[time_measure]) >= start_ts - self.scale_sec/2
                 mask = mask1 * mask2
+                data = np.array(self.data[measure_type])[mask]
                 if measure_type in ['Pressure']:
-                    tmp['Pression'] = np.mean(np.array(self.data[measure_type])[mask])
+                    if len(data) > 0:
+                        tmp['Pression'] = np.mean(data)
+                    else:
+                        tmp['Pression'] = np.nan
+                elif measure_type in ['Temperature']:
+                    if len(data) > 0:
+                        tmp['Température'] = np.mean(data)
+                    else:
+                        tmp['Température'] = np.nan
+                elif measure_type in ['Humidity']:
+                    if len(data) > 0:
+                        tmp['Humidité'] = np.mean(data)
+                    else:
+                        tmp['Humidité'] = np.nan
+                elif measure_type in ['Rain']:
+                    if len(data) > 0:
+                        tmp['Pluie 5min'] = np.mean(data)
+                        tmp['Pluie 1h'] = np.array(self.data[measure_type+'_1h'])[mask]
+                        tmp['Pluie 3h'] = np.array(self.data[measure_type+'_3h'])[mask]
+                        tmp['Pluie 6h'] = np.array(self.data[measure_type+'_6h'])[mask]
+                        tmp['Pluie 12h'] = np.array(self.data[measure_type+'_12h'])[mask]x
+                        tmp['Pluie 24h'] = np.array(self.data[measure_type+'_1d'])[mask]
+                        
+                        
             start_ts += self.scale_sec
             new_ligne = pd.DataFrame([tmp])
             df = pd.concat([df, new_ligne], ignore_index=True)
