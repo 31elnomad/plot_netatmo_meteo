@@ -187,7 +187,7 @@ class token:
                         tmp['Pluie 1h'] = np.array(self.data[measure_type+'_1h'])[mask]
                         tmp['Pluie 3h'] = np.array(self.data[measure_type+'_3h'])[mask]
                         tmp['Pluie 6h'] = np.array(self.data[measure_type+'_6h'])[mask]
-                        tmp['Pluie 12h'] = np.array(self.data[measure_type+'_12h'])[mask]x
+                        tmp['Pluie 12h'] = np.array(self.data[measure_type+'_12h'])[mask]
                         tmp['Pluie 24h'] = np.array(self.data[measure_type+'_1d'])[mask]
                         
                         
