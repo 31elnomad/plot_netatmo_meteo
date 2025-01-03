@@ -172,9 +172,7 @@ class token:
             formatted_time = dt_object.strftime("%Y-%m-%d %H:%M:%S")
             self.data['Time'][i] = formatted_time
             print(self.data['Time'][i])
-            quit()
-            start_ts = np.mean(np.array(time_tmp))
-            quit()
+            start_ts = epoch_timestamp
 
 def to_unix_timestamp(date):
     """
