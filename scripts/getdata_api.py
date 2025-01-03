@@ -151,7 +151,7 @@ class token:
             if len(self.data[measure_type]) > max_dim:
                 max_dim = len(self.data[measure_type])
         n = [0, 0, 0, 0]
-        self.data['Time'] = np.empty(max_dim)
+        self.data['Time'] = np.empty(max_dim).astype(str)
         for i in range(max_dim):
             time_tmp = []
             for measure_type in ['Pressure', 'Temperature', 'Rain', 'WindAngle']:
@@ -167,10 +167,7 @@ class token:
                 if self.data[name][n[j]] - start_ts < self.scale_sec:
                     time_tmp.append(self.data[name][n[j]])
                     n[j] += 1
-            epoch_timestamp = np.mean(np.array(time_tmp)) // 60
-            if np.mean(np.array(time_tmp))%60 >= 30:
-                epoch_timestamp = epoch_timestamp + 1
-            epoch_timestamp = epoch_timestamp * 60
+            epoch_timestamp = np.mean(np.array(time_tmp))
             dt_object = datetime.fromtimestamp(epoch_timestamp)  
             formatted_time = dt_object.strftime("%Y-%m-%d %H:%M:%S")
             self.data['Time'][i] = formatted_time
