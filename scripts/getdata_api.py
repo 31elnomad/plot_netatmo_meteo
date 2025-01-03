@@ -166,7 +166,7 @@ class token:
                 mask1 = np.array(self.data[time_measure]) < start_ts + self.scale_sec/2 
                 mask2 = np.array(self.data[time_measure]) >= start_ts - self.scale_sec/2
                 mask = mask1 * mask2
-                print(self.data[time_measure][mask])
+                print(np.array(self.data[time_measure])[mask])
                 quit()
                 #if measure_type in ['Pressure']:
                 #    tmp['Pression'] = 
