@@ -150,14 +150,13 @@ class token:
         elif self.scale in ['1day']:
             dim = 1
         start_ts = to_unix_timestamp(self.start.strftime("%Y%m%d")) + self.scale_sec/2
-        print(type(start_ts))
-        quit()
         columns=['Date', 'Temperature', 'Humidité', 'Point de rosé', 'Humidex', 'Windchill',
                  'Direction', 'Vent', 'Rafales', 'Pression', 'Pluie 5min', 'Pluie 1h',
                  'Pluie 3h', 'Pluie 6h', 'Pluie 12h', 'Pluie 24h']
         df = pd.DataFrame(columns=columns)
         for i in range(dim):
-            formatted_time = start_ts.strftime("%Y-%m-%d %H:%M:%S")
+            dt_object = datetime.fromtimestamp(start_ts)
+            formatted_time = dt_object.strftime("%Y-%m-%d %H:%M:%S")
             print(formatted_time)
             quit()
             #ligne = pd.DataFrame([{'Date'
