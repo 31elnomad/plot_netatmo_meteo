@@ -167,12 +167,11 @@ class token:
                 if self.data[name][n[j]] - start_ts <= self.scale_sec:
                     time_tmp.append(self.data[name][n[j]])
                     n[j] += 1
-                print('time_tmp', self.data[name][n[j]], start_ts)
             epoch_timestamp = int(np.mean(np.array(time_tmp)))
             dt_object = datetime.fromtimestamp(epoch_timestamp)  
             formatted_time = dt_object.strftime("%Y-%m-%d %H:%M:%S")
             self.data['Time'][i] = formatted_time
-            print(self.data['Time'][i])
+            print(self.data['Time'][i], i)
             start_ts = epoch_timestamp
 
 def to_unix_timestamp(date):
