@@ -166,8 +166,8 @@ class token:
                 if self.data[name][n[j]] - start_ts < self.scale_sec:
                     time_tmp.append(self.data[name][n[j]])
                     n[j] += 1
-                    print(time_tmp)
-                    quit()
+            print(time_tmp)
+            quit()
 
 def to_unix_timestamp(date):
     """
