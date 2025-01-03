@@ -163,8 +163,8 @@ class token:
                             'GustStrength', 'WindStrength']
             for measure_type in list_measure:
                 time_measure = measure_type + '_t'
-                mask1 = self.data[time_measure] < start_ts + self.scale_sec/2 
-                mask2 = self.data[time_measure] >= start_ts - self.scale_sec/2
+                mask1 = np.array(self.data[time_measure]) < start_ts + self.scale_sec/2 
+                mask2 = np.array(self.data[time_measure]) >= start_ts - self.scale_sec/2
                 mask = mask1 * mask2
                 print(self.data[time_measure][mask])
                 quit()
