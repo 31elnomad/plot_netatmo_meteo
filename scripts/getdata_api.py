@@ -168,7 +168,7 @@ class token:
                 if measure_type in ['Pressure']:
                     tmp['Pression'] = np.mean(np.array(self.data[measure_type])[mask])
             new_ligne = pd.DataFrame([tmp])
-            df = pd.concat([df, nouvelle_ligne], ignore_index=True)
+            df = pd.concat([df, new_ligne], ignore_index=True)
         print(df)
 
 
