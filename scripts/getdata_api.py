@@ -158,21 +158,19 @@ class token:
             dt_object = datetime.fromtimestamp(start_ts)
             formatted_time = dt_object.strftime("%Y-%m-%d %H:%M:%S")
             tmp = {'Date':formatted_time}
-            list_measure = ['Pressure', 'Temperature', 'Humidity', 'Rain', 'Rain_1h',
-                            'Rain_3h', 'Rain_6h', 'Rain_12h', 'Rain_24h', 'WindAngle',
+            list_measure = ['Pressure', 'Temperature', 'Humidity', 'Rain', 'WindAngle',
                             'GustStrength', 'WindStrength']
             for measure_type in list_measure:
                 time_measure = measure_type + '_t'
                 mask1 = np.array(self.data[time_measure]) < start_ts + self.scale_sec/2 
                 mask2 = np.array(self.data[time_measure]) >= start_ts - self.scale_sec/2
                 mask = mask1 * mask2
-                print(np.array(self.data[time_measure])[mask])
-                quit()
-                #if measure_type in ['Pressure']:
-                #    tmp['Pression'] = 
-        
-        
-        
+                if measure_type in ['Pressure']:
+                    tmp['Pression'] = np.mean(np.array(self.data[measure_type])[mask])
+            new_ligne = pd.DataFrame([tmp])
+            df = pd.concat([df, nouvelle_ligne], ignore_index=True)
+        print(df)
+
 
 def to_unix_timestamp(date):
     """
