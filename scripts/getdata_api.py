@@ -197,7 +197,7 @@ class token:
                         tmp['Pluie 6h'] = np.nan
                         tmp['Pluie 12h'] = np.nan
                         tmp['Pluie 24h'] = np.nan
-                elif measure_type['WindAngle']:
+                elif measure_type in ['WindAngle']:
                     if len(data) > 0:
                         tmp['Direction'] = np.mean(data)
                     else:
