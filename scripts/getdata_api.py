@@ -3,7 +3,7 @@ import time
 import requests
 import numpy as np
 import pandas as pd
-from diagnostics import cmp_cumul_rain, calculer_point_de_rosee
+from diagnostics import cmp_cumul_rain, calculer_point_de_rosee, calculer_humidex
 
 class token:
 
@@ -151,7 +151,7 @@ class token:
         elif self.scale in ['1day']:
             dim = 1
         start_ts = to_unix_timestamp(self.start.strftime("%Y%m%d")) + self.scale_sec/2
-        columns=['Date', 'Température', 'Humidité', 'Point de rosé', 'Humidex', 'Windchill',
+        columns=['Date', 'Température', 'Humidité', 'Point de rosée', 'Humidex', 'Windchill',
                  'Direction', 'Vent', 'Rafales', 'Pression', 'Pluie 5min', 'Pluie 1h',
                  'Pluie 3h', 'Pluie 6h', 'Pluie 12h', 'Pluie 24h']
         df = pd.DataFrame(columns=columns)
@@ -214,7 +214,10 @@ class token:
                         tmp['Vent'] = np.nan
             if tmp['Humidité'] != np.nan and tmp['Température'] != np.nan:
                 td = calculer_point_de_rosee(tmp['Température'], tmp['Humidité'])
-                tmp['Point de rosé'] = np.round(td, 1)
+                tmp['Point de rosée'] = np.round(td, 1)
+            if tmp['Point de rosée'] != np.nan:
+                humidex = calculer_humidex(tmp['Température'], tmp['Point de rosée'])
+                tmp['Humidex'] = np.round(humidex, 1)
             start_ts += self.scale_sec
             new_ligne = pd.DataFrame([tmp])
             df = pd.concat([df, new_ligne], ignore_index=True)
